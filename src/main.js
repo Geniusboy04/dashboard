@@ -9,10 +9,8 @@ require('./assets/css/tooplate.css')
 require('./assets/css/fontawesome.min.css')
 require('./assets/css/bootstrap.min.css')
 
-// import 'chart.js/dist/chart.min.js'
 
 
-//lion
 import axiosHttp from './http-common';
 Vue.prototype.$http = axiosHttp
 
