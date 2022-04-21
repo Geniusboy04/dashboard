@@ -66,46 +66,24 @@
           </div>
         </div>
 
-        <div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+        <div class="col-xl-4 col-lg-13 tm-md-12 tm-sm-12 tm-col">
           <div class="bg-white tm-block h-100">
             <h2 class="tm-block-title d-inline-block">Student Direction</h2>
-            <table class="table table-hover table-striped mt-3">
-              <tbody>
-              <tr>
-                <td>1. Cras efficitur lacus</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>2. Pellentesque molestie</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>3. Sed feugiat nulla</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>4. Vestibulum varius arcu</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>5. Aenean eget urna enim</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>6. Condimentum viverra</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>7. In malesuada</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>8. Placerat</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-              </tr>
-              <tr>
-                <td>9. Donec semper</td>
-                <td class="tm-trash-icon-cell"><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+            <table class="table table-hover table-striped mt-2">
+              <tbody id="accordion">
+              <tr class="card" v-for="direction in directions" :key="direction.faculty.id">
+                  <td class="card-header" id="headingOne">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            {{direction.faculty.name}}
+                        </button>
+                      </h5>
+                  </td>
+                  <td id="collapseOne" v-for="direction in directions" :key="direction.id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body" >
+                      <p>{{direction.code}}</p>
+                    </div>
+                  </td>
               </tr>
               </tbody>
             </table>
@@ -135,20 +113,29 @@ export default {
   components: {Navbar},
   data(){
     return {
-      students: []
+      students: [],
+      directions: []
     }
   },
   methods: {
-    init(){
-      this.$http.get("/student/list").then(response => {
-        this.students.data = response.data
+    getStudents(){
+      this.$http.get("/students").then(response => {
+        this.students = response.data
+      }).catch(e => {
+        console.log(e)
+      })
+    },
+    getDirections(){
+      this.$http.get("/directions").then(response => {
+        this.directions = response.data
       }).catch(e => {
         console.log(e)
       })
     }
   },
   created() {
-    this.init()
+    this.getStudents();
+    this.getDirections();
   }
 }
 </script>
