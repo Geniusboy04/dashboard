@@ -21,42 +21,22 @@
                 <thead>
                 <tr class="tm-bg-gray">
                   <th scope="col">&nbsp;</th>
-                  <th scope="col">Product Name</th>
-                  <th scope="col" class="text-center">Units Sold</th>
-                  <th scope="col" class="text-center">In Stock</th>
-                  <th scope="col">Expire Date</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col" class="text-center">Last Name</th>
+                  <th scope="col" class="text-center">Phone Number</th>
+                  <th scope="col">Passport Number</th>
                   <th scope="col">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr v-for="student in students" :key="student.id">
                   <th scope="row">
                     <input type="checkbox" aria-label="Checkbox">
                   </th>
-                  <td class="tm-product-name">1. In malesuada placerat (hover)</td>
-                  <td class="text-center">145</td>
-                  <td class="text-center">255</td>
-                  <td>2018-10-28</td>
-                  <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <input type="checkbox" aria-label="Checkbox">
-                  </th>
-                  <td class="tm-product-name">2. Aenean eget urna enim. Sed enim</td>
-                  <td class="text-center">240</td>
-                  <td class="text-center">260</td>
-                  <td>2018-10-24</td>
-                  <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                </tr>
-                <tr>
-                  <th scope="row">
-                    <input type="checkbox" aria-label="Checkbox">
-                  </th>
-                  <td class="tm-product-name">3. Vivamus convallis tincidunt nisi</td>
-                  <td class="text-center">360</td>
-                  <td class="text-center">440</td>
-                  <td>2019-02-14</td>
+                  <td class="tm-product-name">{{student.firstName}}</td>
+                  <td class="text-center">{{student.lastName}}</td>
+                  <td class="text-center">{{student.phoneNumber}}</td>
+                  <td>{{student.passportNumber}}</td>
                   <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                 </tr>
                 </tbody>
@@ -152,7 +132,24 @@ import Navbar from "../components/Navbar";
 
 export default {
   name: "Student",
-  components: {Navbar}
+  components: {Navbar},
+  data(){
+    return {
+      students: []
+    }
+  },
+  methods: {
+    init(){
+      this.$http.get("/student/list").then(response => {
+        this.students.data = response.data
+      }).catch(e => {
+        console.log(e)
+      })
+    }
+  },
+  created() {
+    this.init()
+  }
 }
 </script>
 
