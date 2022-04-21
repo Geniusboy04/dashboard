@@ -15,24 +15,6 @@
             <li class="tm-list-group-item">
               Donec eget libero
             </li>
-            <li class="tm-list-group-item">
-              Nunc luctus suscipit elementum
-            </li>
-            <li class="tm-list-group-item">
-              Maecenas eu justo maximus
-            </li>
-            <li class="tm-list-group-item">
-              Pellentesque auctor urna nunc
-            </li>
-            <li class="tm-list-group-item">
-              Sit amet aliquam lorem efficitur
-            </li>
-            <li class="tm-list-group-item">
-              Pellentesque auctor urna nunc
-            </li>
-            <li class="tm-list-group-item">
-              Sit amet aliquam lorem efficitur
-            </li>
           </ol>
         </div>
       </div>

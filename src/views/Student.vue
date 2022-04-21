@@ -23,20 +23,20 @@
                   <th scope="col">&nbsp;</th>
                   <th scope="col">First Name</th>
                   <th scope="col" class="text-center">Last Name</th>
-                  <th scope="col" class="text-center">Phone Number</th>
-                  <th scope="col">Passport Number</th>
+                  <th scope="col" class="text-center">Course</th>
+                  <th scope="col">Grade</th>
                   <th scope="col">&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="student in students" :key="student.id">
+                <tr v-for="student in journal" :key="student.id">
                   <th scope="row">
                     <input type="checkbox" aria-label="Checkbox">
                   </th>
-                  <td class="tm-product-name">{{student.firstName}}</td>
-                  <td class="text-center">{{student.lastName}}</td>
-                  <td class="text-center">{{student.phoneNumber}}</td>
-                  <td>{{student.passportNumber}}</td>
+                  <td class="tm-product-name">{{student.student.firstName}}</td>
+                  <td class="text-center">{{student.student.lastName}}</td>
+                  <td class="text-center">{{student.course.course}}</td>
+                  <td>{{student.grade}}%</td>
                   <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
                 </tr>
                 </tbody>
@@ -113,14 +113,14 @@ export default {
   components: {Navbar},
   data(){
     return {
-      students: [],
+      journal: [],
       directions: []
     }
   },
   methods: {
     getStudents(){
-      this.$http.get("/students").then(response => {
-        this.students = response.data
+      this.$http.get("/journal").then(response => {
+        this.journal = response.data
       }).catch(e => {
         console.log(e)
       })

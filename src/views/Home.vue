@@ -28,35 +28,27 @@
             <div class="row">
               <div class="col-8">
                 <h2 class="tm-block-title d-inline-block">Top Student List</h2>
-
               </div>
               <div class="col-4 text-right">
                 <router-link to="/students" class="tm-link-black">View All</router-link>
               </div>
             </div>
-            <ol class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big">
-              <li class="tm-list-group-item">
-                Donec eget libero
-              </li>
-              <li class="tm-list-group-item">
-                Nunc luctus suscipit elementum
-              </li>
-              <li class="tm-list-group-item">
-                Maecenas eu justo maximus
-              </li>
-              <li class="tm-list-group-item">
-                Pellentesque auctor urna nunc
-              </li>
-              <li class="tm-list-group-item">
-                Sit amet aliquam lorem efficitur
-              </li>
-              <li class="tm-list-group-item">
-                Pellentesque auctor urna nunc
-              </li>
-              <li class="tm-list-group-item">
-                Sit amet aliquam lorem efficitur
-              </li>
-            </ol>
+            <table class="table table-hover  tm-table-striped-even mt-3">
+              <thead>
+              <tr class="tm-bg-gray">
+                <th scope="col">First Name</th>
+                <th scope="col" class="text-center">Last Name</th>
+                <th scope="col">Grade</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="student in students" :key="student.id">
+                <td class="tm-product-name">{{student.student.firstName}}</td>
+                <td class="text-center">{{student.student.lastName}}</td>
+                <td>{{student.grade}}%</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <div class="tm-col tm-col-big">
@@ -78,14 +70,6 @@
               <li class="tm-list-group-item">Lorem ipsum doloe</li>
               <li class="tm-list-group-item">Read reports</li>
               <li class="tm-list-group-item">Write email</li>
-
-              <li class="tm-list-group-item">Call customers</li>
-              <li class="tm-list-group-item">Go to meeting</li>
-              <li class="tm-list-group-item">Weekly plan</li>
-              <li class="tm-list-group-item">Ask for feedback</li>
-
-              <li class="tm-list-group-item">Meet Supervisor</li>
-              <li class="tm-list-group-item">Company trip</li>
             </ol>
           </div>
         </div>
@@ -106,11 +90,26 @@
 <script>
 import Navbar from "../components/Navbar";
 
-
-
 export default {
   name: "Home",
-  components: {Navbar}
+  data(){
+    return {
+      students: []
+    }
+  },
+  components: {Navbar},
+  methods: {
+    getStudents(){
+      this.$http.get("/smart-student").then(response => {
+        this.students = response.data
+      }).catch(e => {
+        console.log(e)
+      })
+    },
+  },
+  created() {
+    this.getStudents()
+  }
 }
 
 

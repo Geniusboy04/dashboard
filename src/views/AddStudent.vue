@@ -36,16 +36,12 @@
                   </select>
                 </div>
                 <div class="input-group mb-3">
-                  <label for="passportNumber" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Passport
-                    Number
-                  </label>
-                  <input id="passportNumber" name="passportNumber" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                  <label for="course" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Course</label>
+                  <input id="course" name="course" type="number" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
                 </div>
                 <div class="input-group mb-3">
-                  <label for="phoneNumber" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Phone
-                    Number
-                  </label>
-                  <input id="phoneNumber" name="phoneNumber" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                  <label for="grade" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Grade</label>
+                  <input id="grade" name="grade" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
                 </div>
                 <div class="input-group mb-3">
                   <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
