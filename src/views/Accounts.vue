@@ -4,21 +4,38 @@
     <Navbar/>
     <!-- row -->
     <div class="row tm-content-row tm-mt-big">
-      <div class="tm-col tm-col-big">
+      <div id="table" class="tm-col tm-col-big">
         <div class="bg-white tm-block">
           <div class="row">
             <div class="col-12">
               <h2 class="tm-block-title d-inline-block">Accounts</h2>
             </div>
           </div>
-          <ol class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big">
-            <li class="tm-list-group-item">
-              Donec eget libero
-            </li>
-          </ol>
+          <table class="table table-hover  tm-table-striped-even mt-3">
+            <thead>
+            <tr class="tm-bg-gray">
+              <th scope="col">Name</th>
+              <th scope="col" class="text-center">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Password</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="account in accounts" :key="account.id">
+              <td class="tm-product-name">{{account.name}}</td>
+              <td class="text-center">{{account.email}}</td>
+              <td>{{account.phoneNumber}}</td>
+              <td>{{account.password}}</td>
+              <td><i class="fas fa-trash-alt tm-trash-icon" @click="remove(student.id)"></i></td>
+              <td><i class="fas fa-edit"></i></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="tm-col tm-col-big">
+      <div id="edit" class="tm-col tm-col-big">
         <div class="bg-white tm-block">
           <div class="row">
             <div class="col-12">
@@ -41,10 +58,6 @@
                   <input placeholder="******" id="password" name="password" type="password" class="form-control validate">
                 </div>
                 <div class="form-group">
-                  <label for="password2">Re-enter Password</label>
-                  <input placeholder="******" id="password2" name="password2" type="password" class="form-control validate">
-                </div>
-                <div class="form-group">
                   <label for="phone">Phone</label>
                   <input placeholder="010-030-0440" id="phone" name="phone" type="tel" class="form-control validate">
                 </div>
@@ -60,17 +73,6 @@
                 </div>
               </form>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="tm-col tm-col-small">
-        <div class="bg-white tm-block">
-          <h2 class="tm-block-title">Profile Image</h2>
-          <img src="../assets/img/profile-image.png" alt="Profile Image" class="img-fluid">
-          <div class="custom-file mt-3 mb-3">
-            <input id="fileInput" type="file" style="display:none;" />
-            <input type="button" class="btn btn-primary d-block mx-xl-auto" value="Upload New..." onclick="document.getElementById('fileInput').click();"
-            />
           </div>
         </div>
       </div>
@@ -91,7 +93,24 @@
 import Navbar from "../components/Navbar";
 export default {
   name: "Accounts",
-  components: {Navbar}
+  components: {Navbar},
+  data(){
+    return {
+      accounts: []
+    }
+  },
+  methods: {
+    init(){
+      this.$http.get("/accounts").then(response => {
+        this.accounts = response.data
+      }).catch(e => {
+        console.log(e)
+      })
+    }
+  },
+  created() {
+    this.init()
+  }
 }
 </script>
 

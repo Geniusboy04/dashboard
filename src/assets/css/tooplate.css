@@ -90,7 +90,7 @@ a:focus {
 }
 
 .tm-block {
-  padding: 50px 45px;
+  padding: 25px 24px;
 }
 
 .tm-block-title {
@@ -136,9 +136,6 @@ a:focus {
   margin-bottom: 50px;
 }
 
-.tm-col-big {
-  width: 39%;
-}
 
 .tm-col-small {
   width: 21.95%;
@@ -151,6 +148,12 @@ a:focus {
 .tm-link-black:hover,
 .tm-link-black:focus {
   color: #0266c4;
+}
+.fa-edit{
+  cursor: pointer;
+}
+.fa-edit:hover{
+  color: #9f1321;
 }
 
 ol {
