@@ -2,7 +2,6 @@
   <body class="bg03">
   <div class="container">
     <Navbar/>
-    <!-- row -->
     <div class="row tm-content-row tm-mt-big">
       <div id="table" class="tm-col tm-col-big">
         <div class="bg-white tm-block">
@@ -19,7 +18,6 @@
               <th scope="col">Phone Number</th>
               <th scope="col">Password</th>
               <th scope="col"></th>
-              <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -28,8 +26,9 @@
               <td class="text-center">{{account.email}}</td>
               <td>{{account.phoneNumber}}</td>
               <td>{{account.password}}</td>
-              <td><i class="fas fa-trash-alt tm-trash-icon" @click="remove(student.id)"></i></td>
-              <td><i class="fas fa-edit"></i></td>
+              <td>
+                <button class="btn btn-light" @click="remove(account.id)"><i class="fas fa-trash-alt tm-trash-icon"></i></button>
+              </td>
             </tr>
             </tbody>
           </table>
@@ -44,34 +43,30 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <form action="" class="tm-signup-form">
+              <div class="tm-signup-form">
                 <div class="form-group">
                   <label for="name">Account Name</label>
-                  <input placeholder="Vulputate Eleifend Nulla" id="name" name="name" type="text" class="form-control validate">
+                  <input placeholder="Admin Name" id="name" name="name" v-model="accountData.name" type="text" class="form-control validate">
                 </div>
                 <div class="form-group">
                   <label for="email">Account Email</label>
-                  <input placeholder="vulputate@eleifend.co" id="email" name="email" type="email" class="form-control validate">
+                  <input placeholder="Admin Email" id="email" v-model="accountData.email" name="email" type="email" class="form-control validate">
                 </div>
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <input placeholder="******" id="password" name="password" type="password" class="form-control validate">
+                  <input placeholder="********" id="password" name="password" type="password" v-model="accountData.password" class="form-control validate">
                 </div>
                 <div class="form-group">
                   <label for="phone">Phone</label>
-                  <input placeholder="010-030-0440" id="phone" name="phone" type="tel" class="form-control validate">
+                  <input placeholder="010-030-0440" id="phone" name="phone" v-model="accountData.phoneNumber" type="tel" class="form-control validate">
                 </div>
                 <div class="row">
                   <div class="col-12 col-sm-4">
-                    <button type="submit" class="btn btn-primary">Update
-                    </button>
-                  </div>
-                  <div class="col-12 col-sm-8 tm-btn-right">
-                    <button type="submit" class="btn btn-danger">Delete Account
+                    <button type="submit" class="btn btn-primary" @click="save">Save
                     </button>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -95,8 +90,15 @@ export default {
   name: "Accounts",
   components: {Navbar},
   data(){
-    return {
-      accounts: []
+    return{
+      accounts: [],
+      accountData: {
+        id: null,
+        name: '',
+        email: '',
+        password: '',
+        phoneNumber: ''
+      }
     }
   },
   methods: {
@@ -106,10 +108,60 @@ export default {
       }).catch(e => {
         console.log(e)
       })
+    },
+    save(){
+      this.$http.post('/account/edit',this.accountData).then(response => {
+        if (response.status === 200) {
+          this.$swal.fire({
+            icon: 'success',
+            title: 'Your data has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          location.reload();
+        }
+      }).catch(e => {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        console.log(e);
+      });
+    },
+    remove(id) {
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$http.delete('/account/delete/' + id).then(response => {
+            if (response.status === 200) {
+              this.$swal.fire({
+                title: 'Deleted!',
+                text: 'Your file has been deleted.',
+                type: 'success'
+              }).then(function () {
+                    location.reload();
+                  }
+              );
+            }
+          }).catch(e => {
+            console.log(e);
+          })
+        }
+      })
     }
   },
   created() {
-    this.init()
+    this.init();
   }
 }
 </script>

@@ -29,15 +29,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="student in journal" :key="student.id">
+                <tr v-for="journal in journals" :key="journal.id">
                   <th scope="row">
                     <input type="checkbox" aria-label="Checkbox">
                   </th>
-                  <td class="tm-product-name">{{student.student.firstName}}</td>
-                  <td class="text-center">{{student.student.lastName}}</td>
-                  <td class="text-center">{{student.course.course}}</td>
-                  <td>{{student.grade}}%</td>
-                  <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+                  <td class="tm-product-name">{{journal.student.firstName}}</td>
+                  <td class="text-center">{{journal.student.lastName}}</td>
+                  <td class="text-center">{{journal.course.course}}</td>
+                  <td>{{journal.grade}}%</td>
+                  <td><button class="btn btn-light" @click="remove(journal.id)"><i class="fas fa-trash-alt tm-trash-icon"></i></button></td>
                 </tr>
                 </tbody>
               </table>
@@ -71,17 +71,17 @@
             <h2 class="tm-block-title d-inline-block">Student Direction</h2>
             <table class="table table-hover table-striped mt-2">
               <tbody id="accordion">
-              <tr class="card" v-for="direction in directions" :key="direction.faculty.id">
+              <tr class="card">
                   <td class="card-header" id="headingOne">
                       <h5 class="mb-0">
                         <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            {{direction.faculty.name}}
+
                         </button>
                       </h5>
                   </td>
                   <td id="collapseOne" v-for="direction in directions" :key="direction.id" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body" >
-                      <p>{{direction.code}}</p>
+                      <p></p>
                     </div>
                   </td>
               </tr>
@@ -113,14 +113,14 @@ export default {
   components: {Navbar},
   data(){
     return {
-      journal: [],
+      journals: [],
       directions: []
     }
   },
   methods: {
     getStudents(){
       this.$http.get("/journal").then(response => {
-        this.journal = response.data
+        this.journals = response.data
       }).catch(e => {
         console.log(e)
       })
@@ -130,6 +130,34 @@ export default {
         this.directions = response.data
       }).catch(e => {
         console.log(e)
+      })
+    },
+    remove(id) {
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$http.delete('/journal/delete/' + id).then(response => {
+            if (response.status === 200) {
+              this.$swal.fire({
+                title: 'Deleted!',
+                text: 'Your file has been deleted.',
+                type: 'success'
+              }).then(function () {
+                    location.reload();
+                  }
+              );
+            }
+          }).catch(e => {
+            console.log(e);
+          })
+        }
       })
     }
   },
