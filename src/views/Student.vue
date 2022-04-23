@@ -3,7 +3,6 @@
   <div class="" id="home">
     <div class="container">
       <Navbar/>
-      <!-- row -->
       <div class="row tm-content-row tm-mt-big">
         <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
           <div class="bg-white tm-block h-100">
