@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-md-8 col-sm-12">
                 <h2 class="tm-block-title d-inline-block">Students</h2>
-
+                  salom
               </div>
               <div class="col-md-4 col-sm-12 text-right">
                 <router-link to="/add-student" class="btn btn-small btn-primary" >Add New Student</router-link>
